@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Authentication</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: black; /* Light background for navbar */
+        }
+
+        .nav-links li {
+            list-style-type: none;
+            display: inline;
+            margin-right: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #343a40; /* Dark color for links */
+        }
+
+        .auth-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80vh;
+        }
+
+        .auth-form {
+            width: 300px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: none;
+            background-color: #ffffff; /* White background for forms */
+        }
+
+        .auth-form h2 {
+            text-align: center;
+            color: #343a40; /* Dark color for header */
+        }
+
+        .form-control {
+            border: 1px solid #ced4da; /* Light border for input */
+            border-radius: 5px; /* Rounded corners */
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .form-control:focus {
+            border-color: #80bdff; /* Focus color */
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Focus shadow */
+        }
+
+        .auth-btn {
+            width: 100%;
+            margin-top: 10px;
+            background-color: #007bff; /* Primary button color */
+            color: white; /* White text on button */
+            border: none; /* No border */
+            border-radius: 5px; /* Rounded corners */
+        }
+
+        .auth-btn:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+
+        footer {
+            text-align: center;
+            padding: 15px;
+            background-color: #333;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <div class="logo">
+            <img src="logo.png" alt="Logo">
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="cart.html">Cart</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
+
+        <!-- Login/Register Dropdown -->
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="authDropdown" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                Login/Register
+            </button>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="authDropdown">
+                <a class="dropdown-item" href="#" onclick="showLogin()">Login</a>
+                <a class="dropdown-item" href="#" onclick="showRegister()">Register</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Authentication Section -->
+    <section class="auth-section">
+        <div id="login-form" class="auth-form">
+            <h2>Login</h2>
+            <form action="auth.php" method="POST">
+                <input type="email" name="email" class="form-control" placeholder="Email" required><br>
+                <input type="password" name="password" class="form-control" placeholder="Password" required><br>
+                <button type="submit" name="login" class="auth-btn" onclick="loginUser()">Login</button>
+            </form>
+        </div>
+
+        <script>
+            function loginUser() {
+                // Simulate login by setting session storage
+                sessionStorage.setItem('loggedIn', true);
+            }
+        </script>
+
+        <div id="register-form" class="auth-form">
+            <h2>Register</h2>
+            <form action="auth.php" method="POST">
+                <input type="text" name="username" class="form-control" placeholder="Username" required><br>
+                <input type="email" name="email" class="form-control" placeholder="Email" required><br>
+                <input type="password" name="password" class="form-control" placeholder="Password" required><br>
+                <button type="submit" name="register" class="auth-btn">Register</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Tastyc Restaurant. All Rights Reserved.</p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script>
+        function showLogin() {
+            document.getElementById('login-form').style.display = 'block';
+            document.getElementById('register-form').style.display = 'none';
+        }
+
+        function showRegister() {
+            document.getElementById('register-form').style.display = 'block';
+            document.getElementById('login-form').style.display = 'none';
+        }
+
+        // Show login form if redirected after registration
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('action') === 'register') {
+            showLogin();
+        }
+    </script>
+</body>
+
+</html>

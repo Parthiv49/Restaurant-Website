@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tastyc Restaurant - Payment</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: black;
+        }
+        .cart-page {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            color: black;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 { text-align: center; margin-bottom: 20px; }
+        input[type="text"], select {
+            width: 100%; padding: 10px; margin-bottom: 15px;
+            border: 1px solid black; border-radius: 5px;
+        }
+        button {
+            width: 100%; padding: 10px; background-color: #007bff;
+            color: white; border: none; border-radius: 5px; cursor: pointer;
+        }
+        button:hover { background-color: #0056b3; }
+        .payment-options { display: flex; justify-content: space-between; margin-bottom: 15px; }
+        .payment-option {
+            flex: 1; text-align: center; margin: 0 5px; padding: 10px;
+            background-color: #e7e7e7; border-radius: 5px; cursor: pointer;
+        }
+        .payment-option:hover { background-color: #d4d4d4; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <section class="cart-page">
+        <h2>Payment</h2>
+        <form id="payment-form" action="payment.php" method="POST">
+            <label for="payment-method">Select Payment Method</label>
+            <div class="payment-options">
+                <div class="payment-option" onclick="selectPaymentMethod('Credit/Debit Card')">Credit/Debit Card</div>
+                <div class="payment-option" onclick="selectPaymentMethod('PayPal')">PayPal</div>
+                <div class="payment-option" onclick="selectPaymentMethod('Apple Pay')">Apple Pay</div>
+            </div>
+            
+            <div id="card-details" class="hidden">
+                <label for="name">Name on Card</label>
+                <input type="text" id="name" name="name" placeholder="Your name">
+                <label for="card-number">Card Number</label>
+                <input type="text" id="card-number" name="card-number" placeholder="1234 5678 9012 3456">
+                <label for="expiration-date">Expiration Date</label>
+                <input type="text" id="expiration-date" name="expiration-date" placeholder="MM/YY">
+                <label for="cvv">CVV</label>
+                <input type="text" id="cvv" name="cvv" placeholder="123">
+            </div>
+
+            <div id="other-details">
+                <label for="email">Email</label>
+                <input type="text" id="email" name="email" placeholder="Your email" required>
+                <label for="phone">Phone Number</label>
+                <input type="text" id="phone" name="phone" placeholder="Your phone number" required>
+            </div>
+
+            <label for="amount">Amount</label>
+            <input type="text" id="amount" name="amount" readonly>
+
+            <button type="submit">Pay Now</button>
+        </form>
+    </section>
+
+    <script>
+        function selectPaymentMethod(method) {
+            const cardDetails = document.getElementById('card-details');
+            const paymentMethodInput = document.createElement('input');
+            paymentMethodInput.setAttribute('type', 'hidden');
+            paymentMethodInput.setAttribute('name', 'payment-method');
+            paymentMethodInput.setAttribute('value', method);
+            document.getElementById('payment-form').appendChild(paymentMethodInput);
+
+            if (method === 'Credit/Debit Card') {
+                cardDetails.classList.remove('hidden');
+            } else {
+                cardDetails.classList.add('hidden');
+            }
+
+            alert(`Selected Payment Method: ${method}`);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const amountInput = document.getElementById('amount');
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const totalAmount = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+            amountInput.value = totalAmount.toFixed(2);
+        });
+    </script>
+</body>
+</html>
