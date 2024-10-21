@@ -85,6 +85,7 @@
 </head>
 
 <body>
+    
     <!-- Navigation Bar -->
     <div class="navbar">
         <div class="logo">
@@ -92,25 +93,19 @@
         </div>
         <nav>
             <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="menu.html">Menu</a></li>
-                <li><a href="cart.html">Cart</a></li>
-                <li><a href="blog.html">Blog</a></li>
-                <li><a href="contact.html">Contact</a></li>
-                <li><a href="about.html">About</a></li>
+                <li><a href="index.php">Home</a></li>
+                <li><a href="menu.php">Menu</a></li>
+                <li><a href="cart.php">Cart</a></li>
+                <li><a href="blog.php">Blog</a></li>
+                <li><a href="contact.php">Contact</a></li>
+                <li><a href="about.php">About</a></li>
             </ul>
         </nav>
 
         <!-- Login/Register Dropdown -->
-        <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="authDropdown" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                Login/Register
-            </button>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="authDropdown">
-                <a class="dropdown-item" href="#" onclick="showLogin()">Login</a>
-                <a class="dropdown-item" href="#" onclick="showRegister()">Register</a>
-            </div>
+        <div id="auth-buttons">
+            <button class="btn btn-secondary" id="login-register-btn" onclick="toggleAuthForms()">Login/Register</button>
+            <button class="btn btn-danger" id="logout-btn" style="display:none;" onclick="logout()">Logout</button>
         </div>
     </div>
 
@@ -121,16 +116,9 @@
             <form action="auth.php" method="POST">
                 <input type="email" name="email" class="form-control" placeholder="Email" required><br>
                 <input type="password" name="password" class="form-control" placeholder="Password" required><br>
-                <button type="submit" name="login" class="auth-btn" onclick="loginUser()">Login</button>
+                <button type="submit" name="login" class="auth-btn">Login</button>
             </form>
         </div>
-
-        <script>
-            function loginUser() {
-                // Simulate login by setting session storage
-                sessionStorage.setItem('loggedIn', true);
-            }
-        </script>
 
         <div id="register-form" class="auth-form">
             <h2>Register</h2>
@@ -151,21 +139,45 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script>
-        function showLogin() {
-            document.getElementById('login-form').style.display = 'block';
-            document.getElementById('register-form').style.display = 'none';
+        // Show login or register form
+        function toggleAuthForms() {
+            const loginForm = document.getElementById('login-form');
+            const registerForm = document.getElementById('register-form');
+            const isLoggedIn = sessionStorage.getItem('loggedIn');
+
+            if (isLoggedIn) {
+                // If logged in, do nothing or show an alert
+                alert('You are already logged in.');
+                return;
+            }
+
+            if (loginForm.style.display === 'block') {
+                loginForm.style.display = 'none';
+                registerForm.style.display = 'block';
+            } else {
+                loginForm.style.display = 'block';
+                registerForm.style.display = 'none';
+            }
         }
 
-        function showRegister() {
-            document.getElementById('register-form').style.display = 'block';
-            document.getElementById('login-form').style.display = 'none';
+        function logout() {
+            sessionStorage.removeItem('loggedIn');
+            document.getElementById('logout-btn').style.display = 'none';
+            document.getElementById('login-register-btn').style.display = 'inline-block';
+            alert('You have logged out successfully.');
         }
 
-        // Show login form if redirected after registration
-        const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.get('action') === 'register') {
-            showLogin();
-        }
+        // Check if the user is logged in and adjust UI accordingly
+        window.onload = function() {
+            const isLoggedIn = sessionStorage.getItem('loggedIn');
+            if (isLoggedIn) {
+                document.getElementById('login-register-btn').style.display = 'none';
+                document.getElementById('logout-btn').style.display = 'inline-block';
+            } else {
+                document.getElementById('login-register-btn').style.display = 'inline-block';
+                document.getElementById('logout-btn').style.display = 'none';
+            }
+        };
     </script>
 </body>
 

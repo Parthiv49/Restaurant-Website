@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <style>
-
         /* Set a fixed size for the carousel container */
         .carousel-container {
             width: 100%;  
@@ -63,6 +62,9 @@
     </style>
 </head>
 <body>
+    <!-- PHP Session Start -->
+    <?php session_start(); ?>
+
     <!-- Navigation Bar -->
     <header>
         <div class="navbar">
@@ -71,17 +73,24 @@
             </div>
             <nav>
                 <ul class="nav-links">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="menu.html">Menu</a></li>
-                    <li><a href="cart.html">Cart</a></li>
-                    <li><a href="blog.html">Blog</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                    <li><a href="about.html">About</a></li>
+                    <li><a href="index.php">Home</a></li>
+                    <li><a href="menu.php">Menu</a></li>
+                    <li><a href="cart.php">Cart</a></li>
+                    <?php if (isset($_SESSION['user_id'])): ?> <!-- Only show if logged in -->
+                    <li><a href="order_history.php">Order History</a></li>
+                    <?php endif; ?>
+                    <li><a href="blog.php">Blog</a></li>
+                    <li><a href="contact.php">Contact</a></li>
+                    <li><a href="about.php">About</a></li>
                 </ul>
             </nav>
             <div class="cta-buttons">
                 <div class="auth-buttons">
-                    <a href="register.html" class="cta-btn">Login/Register</a>
+                    <?php if (isset($_SESSION['user_id'])): ?>
+                        <a href="logout.php" class="cta-btn">Logout</a>
+                    <?php else: ?>
+                        <a href="register.html" class="cta-btn">Login/Register</a>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -105,10 +114,10 @@
                     <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
                 </ol>
                 <div class="carousel-inner">
-                    <div class="carousel-item">
+                    <div class="carousel-item active">
                         <img src="Pizza.jpg" alt="Pizza">
                     </div>
-                    <div class="carousel-item active">
+                    <div class="carousel-item">
                         <img src="burger.jpeg" alt="Delicious Food">
                     </div>
                     <div class="carousel-item">

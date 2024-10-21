@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <?php session_start(); ?>
     <!-- Navigation Bar -->
     <header>
         <div class="navbar">
@@ -15,14 +16,26 @@
             </div>
             <nav>
                 <ul class="nav-links">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="menu.html">Menu</a></li>
-                    <li><a href="cart.html">Cart</a></li>
-                    <li><a href="blog.html">Blog</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                    <li><a href="about.html">About</a></li>
+                    <li><a href="index.php">Home</a></li>
+                    <li><a href="menu.php">Menu</a></li>
+                    <li><a href="cart.php">Cart</a></li>
+                    <?php if (isset($_SESSION['user_id'])): ?> <!-- Only show if logged in -->
+                    <li><a href="order_history.php">Order History</a></li>
+                    <?php endif; ?>
+                    <li><a href="blog.php">Blog</a></li>
+                    <li><a href="contact.php">Contact</a></li>
+                    <li><a href="about.php">About</a></li>
                 </ul>
             </nav>
+            <div class="cta-buttons">
+                <div class="auth-buttons">
+                    <?php if (isset($_SESSION['user_id'])): ?>
+                        <a href="logout.php" class="cta-btn">Logout</a>
+                    <?php else: ?>
+                        <a href="register.html" class="cta-btn">Login/Register</a>
+                    <?php endif; ?>
+                </div>
+            </div>
         </div>
     </header>
 
@@ -48,6 +61,12 @@
                 <p>Delicious cupcake with creamy frosting.</p>
                 <button class="add-to-cart" onclick="addToCart('Cupcake', 3.99, 'Cupcake.jpg')">Add to Cart</button>
             </div>
+            <div class="menu-item">
+                <img src="PavBhaji.jpg" alt="Pav Bhaji">
+                <h3>Pav Bhaji</h3>
+                <p>Spicy mixed vegetable curry served with buttered bread.</p>
+                <button class="add-to-cart" onclick="addToCart('Pav Bhaji', 9.99, 'PavBhaji.jpg')">Add to Cart</button>
+            </div>
         </div>
     </section>
 
@@ -64,7 +83,7 @@
             <p id="total-amount">Total: $0.00</p>
             <div>
                 <button onclick="clearCart()" class="clear-cart-btn">Clear Cart</button>
-                <a href="cart.html" class="checkout-btn">Checkout</a>
+                <a href="cart.php" class="checkout-btn">Checkout</a>
             </div>
         </div>
     </div>

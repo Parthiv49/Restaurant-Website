@@ -22,7 +22,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Validate payment details
     if (!$amount || empty($payment_method) || empty($email) || empty($phone)) {
-        die("Error: Missing or invalid details.");
+        $_SESSION['error'] = "Error: Missing or invalid payment method. Please select a payment method.";
+        echo "<script>alert('Please select a Payment Method.');</script>";
+        echo "<script>window.location.href = 'payment.html';</script>";
+        exit();
     }
 
     // Insert payment details into the database
@@ -35,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Execute the statement and check for success
     if ($stmt->execute()) {
         echo "<script>alert('Payment successful! Thank you for your order.');</script>";
-        echo "<script>localStorage.removeItem('cart'); window.location.href = 'menu.html';</script>";
+        echo "<script>localStorage.removeItem('cart'); window.location.href = 'menu.php';</script>";
     } else {
         echo "Error: " . $stmt->error;
     }

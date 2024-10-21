@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <?php session_start(); ?>
     <!-- Navigation Bar -->
     <header>
         <div class="navbar">
@@ -15,14 +16,26 @@
             </div>
             <nav>
                 <ul class="nav-links">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="menu.html">Menu</a></li>
-                    <li><a href="cart.html">Cart</a></li>
-                    <li><a href="blog.html">Blog</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                    <li><a href="about.html">About</a></li>
+                    <li><a href="index.php">Home</a></li>
+                    <li><a href="menu.php">Menu</a></li>
+                    <li><a href="cart.php">Cart</a></li>
+                    <?php if (isset($_SESSION['user_id'])): ?>
+                    <li><a href="order_history.php">Order History</a></li>
+                    <?php endif; ?>
+                    <li><a href="blog.php">Blog</a></li>
+                    <li><a href="contact.php">Contact</a></li>
+                    <li><a href="about.php">About</a></li>
                 </ul>
             </nav>
+            <div class="cta-buttons">
+                <div class="auth-buttons">
+                    <?php if (isset($_SESSION['user_id'])): ?>
+                        <a href="logout.php" class="cta-btn">Logout</a>
+                    <?php else: ?>
+                        <a href="register.html" class="cta-btn">Login/Register</a>
+                    <?php endif; ?>
+                </div>
+            </div>
         </div>
     </header>
 

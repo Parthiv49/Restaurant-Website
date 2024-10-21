@@ -102,7 +102,7 @@ body::before {
     border-bottom: 1px solid #ddd;
 }
 
-.cart-page .checkout-btn {
+.cart-page .--btn {
     background-color: #f05454;
     color: #fff;
     padding: 15px 30px;
@@ -339,19 +339,6 @@ footer {
 #total-amount {
     font-weight: bold;
     margin: 0;
-}
-
-.checkout-btn {
-    background-color: #4CAF50;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.checkout-btn:hover {
-    background-color: #3e8e41;
 }
 
 /* Styles for the cart panel */

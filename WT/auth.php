@@ -45,7 +45,7 @@ if (isset($_POST['login'])) {
             echo "<script>
                     alert('Login successful!');
                     setTimeout(function() {
-                        window.location.href = 'index.html';
+                        window.location.href = 'index.php';
                     }, 2000);
                   </script>";
         } else {
